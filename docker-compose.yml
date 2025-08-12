@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  api:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    container_name: memwatch-webapp-api
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+  ui:
+    build:
+      context: .
+      dockerfile: dashboard-ui/Dockerfile
+    container_name: memwatch-webapp-ui
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
